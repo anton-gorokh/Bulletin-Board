@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 import org.bulletin_board.dao.EmailDAO;
 import org.bulletin_board.domain.Announcement;
 import org.bulletin_board.service.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,10 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class EmailServiceImpl implements EmailService {
-    final
+    @Autowired
     EmailDAO emailDAO;
 
-    final
+    @Autowired
     JavaMailSender sender;
 
     private List<String> findEmails(Announcement announcement) {
