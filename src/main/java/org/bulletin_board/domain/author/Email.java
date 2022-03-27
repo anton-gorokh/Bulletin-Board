@@ -28,10 +28,6 @@ public class Email {
     @NotBlank(message = "Email cannot be empty")
     String name;
 
-    @Valid
-    @ManyToOne
-    Author author;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

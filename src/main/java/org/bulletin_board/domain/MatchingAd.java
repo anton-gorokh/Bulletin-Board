@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "MatchingAd")
@@ -25,24 +26,36 @@ public class MatchingAd {
     int id;
 
     @PositiveOrZero
-    @Column(scale = 2)
+    @Column(scale = 2, name = "price_From")
     BigDecimal priceFrom;
 
     @PositiveOrZero
-    @Column(scale = 2)
+    @Column(scale = 2, name = "price_to")
     BigDecimal priceTo;
 
     @NotNull
     @Valid
     @OneToOne(cascade = {CascadeType.MERGE},
             fetch = FetchType.EAGER)
+    @JoinColumn(name = "rubric_id")
     Rubric rubric;
 
     @NotNull
     @Valid
     @OneToOne(cascade = {CascadeType.MERGE},
             fetch = FetchType.EAGER)
-    Author author;
+    @JoinColumn(name = "mad_creator")
+    Author creator;
+
+    @NotNull
+    @Valid
+    @OneToMany(cascade = {CascadeType.MERGE},
+            fetch = FetchType.EAGER)
+    @JoinTable(name = "Mad_Author",
+            joinColumns = @JoinColumn(name = "mad_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = "mad_id"))
+    List<Author> authors;
 
     String title;
 }

@@ -6,10 +6,11 @@ import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table (name = "Phone")
+@Table(name = "Phone")
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -22,13 +23,10 @@ public class Phone {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
+    @Size(max = 16)
     @NotBlank(message = "Phone number cannot be empty")
     @Column(name = "phone_number")
     String phoneNumber;
-
-    @Valid
-    @ManyToOne
-    Author author;
 
     @Override
     public boolean equals(Object o) {

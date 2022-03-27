@@ -3,8 +3,8 @@ package org.bulletin_board.service.impl;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.bulletin_board.dao.EmailDAO;
 import org.bulletin_board.domain.Announcement;
+import org.bulletin_board.repository.EmailRepository;
 import org.bulletin_board.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -18,13 +18,17 @@ import java.util.List;
 @AllArgsConstructor
 public class EmailServiceImpl implements EmailService {
     @Autowired
-    EmailDAO emailDAO;
+    EmailRepository emailRepository;
 
     @Autowired
     JavaMailSender sender;
 
     private List<String> findEmails(Announcement announcement) {
-        return emailDAO.findEmails(announcement);
+        return emailRepository.findEmails(
+                announcement.getAuthor(),
+                announcement.getRubric(),
+                announcement.getName(),
+                announcement.getPay());
     }
 
     @Override

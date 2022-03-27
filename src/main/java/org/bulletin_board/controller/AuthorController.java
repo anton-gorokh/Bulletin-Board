@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 import org.bulletin_board.domain.author.Author;
 import org.bulletin_board.dto.AuthorDTO;
 import org.bulletin_board.service.AuthorService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -15,7 +16,6 @@ import javax.validation.Valid;
 @RequestMapping("author")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthorController {
-
     final
     AuthorService authorService;
 
@@ -24,15 +24,16 @@ public class AuthorController {
         return authorService.findById(id);
     }
 
+
     @GetMapping("/find/dto/{id}")
     public AuthorDTO findDtoById(@PathVariable("id") int id) {
         Author author = authorService.findById(id);
         return new AuthorDTO(author);
     }
 
+    @Secured("ROLE_USER")
     @PostMapping("/save")
     public void save(@RequestBody @Valid Author author) {
-        author.getPhones().forEach(p -> p.setAuthor(author));
         authorService.save(author);
     }
 

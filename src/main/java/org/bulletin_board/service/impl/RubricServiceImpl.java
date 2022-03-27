@@ -3,8 +3,8 @@ package org.bulletin_board.service.impl;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import org.bulletin_board.dao.RubricDAO;
 import org.bulletin_board.domain.Rubric;
+import org.bulletin_board.repository.RubricRepository;
 import org.bulletin_board.service.RubricService;
 import org.springframework.stereotype.Service;
 
@@ -13,44 +13,50 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Service
 public class RubricServiceImpl implements RubricService {
-    final RubricDAO rubricDAO;
+    final RubricRepository rubricRepository;
 
-    public RubricServiceImpl(RubricDAO rubricDAO) {
-        this.rubricDAO = rubricDAO;
+    public RubricServiceImpl(RubricRepository rubricRepository) {
+        this.rubricRepository = rubricRepository;
     }
 
     @Override
-    public Rubric findByName(String name) {
-        return rubricDAO.findByName(name);
+    public Rubric findByName(String name) throws NullPointerException {
+        return rubricRepository.findByName(name)
+                .orElseThrow(() -> new NullPointerException("There is no rubric with such name"));
     }
 
     @Override
-    public List<Rubric> findAllContainingWord(String word) {
-        return rubricDAO.findAllContainingWord(word);
+    public List<Rubric> findAllContainingWord(String word) throws NullPointerException {
+        List<Rubric> allByNameContaining = rubricRepository.findAllByNameContaining(word);
+        if (allByNameContaining.isEmpty()) {
+            throw new NullPointerException("There is no rubric containing such word");
+        }
+        return allByNameContaining;
     }
 
     @Override
     public List<Rubric> findAll() {
-        return rubricDAO.findAll();
+        return rubricRepository.findAll();
     }
 
     @Override
     public Rubric findById(int id) {
-        return rubricDAO.findById(id);
+        return rubricRepository.findById(id)
+                .orElseThrow(() -> new NullPointerException("There is no rubric with such id"));
     }
 
     @Override
-    public void save(Rubric announcement) {
-        rubricDAO.save(announcement);
+    public void save(Rubric rubric) {
+        rubricRepository.save(rubric);
     }
 
     @Override
-    public void update(Rubric announcement) {
-        rubricDAO.update(announcement);
+    public void update(Rubric rubric) {
+        rubricRepository.save(rubric);
     }
 
     @Override
     public void deleteById(int id) {
-        rubricDAO.deleteById(id);
+        rubricRepository.deleteById(id);
     }
 }

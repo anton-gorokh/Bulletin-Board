@@ -3,39 +3,36 @@ package org.bulletin_board.service.impl;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.bulletin_board.dao.CrudDAO;
 import org.bulletin_board.domain.MatchingAd;
+import org.bulletin_board.repository.MatchingAdRepository;
 import org.bulletin_board.service.CrudService;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @AllArgsConstructor
 public class MatchingAdServiceImpl implements CrudService<MatchingAd> {
 
-    final
-    @Qualifier("matchingAdDAOImpl")
-    CrudDAO<MatchingAd> matchingAdDAO;
+    MatchingAdRepository repository;
 
     @Override
     public MatchingAd findById(int id) {
-        return matchingAdDAO.findById(id);
+        return repository.findById(id).get();
     }
 
     @Override
     public void save(MatchingAd matchingAd) {
-        matchingAdDAO.save(matchingAd);
+        repository.save(matchingAd);
     }
 
     @Override
     public void update(MatchingAd matchingAd) {
-        matchingAdDAO.update(matchingAd);
+        repository.save(matchingAd);
     }
 
     @Override
     public void deleteById(int id) {
-        matchingAdDAO.deleteById(id);
+        repository.deleteById(id);
     }
 
 }

@@ -5,16 +5,18 @@ import config.AppConfigTest;
 import domain.Util;
 import org.bulletin_board.controller.AuthorController;
 import org.bulletin_board.domain.author.Author;
-import org.bulletin_board.handler_exeptions.HandlerExceptions;
 import org.bulletin_board.service.AuthorService;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -22,30 +24,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@WebMvcTest(AuthorController.class)
 @ContextConfiguration(classes = AppConfigTest.class)
 @WebAppConfiguration
 public class AuthorControllerTest {
     public static final ObjectMapper MAPPER = new ObjectMapper();
 
-    @Mock
+    @MockBean
     AuthorService authorService;
 
-    @InjectMocks
-    AuthorController controller;
-
+    @Autowired
     MockMvc mockMvc;
 
-    @BeforeAll
-    public void setup() {
-        MockitoAnnotations.openMocks(this);
-
-        mockMvc = MockMvcBuilders
-                .standaloneSetup(controller)
-                .setControllerAdvice(HandlerExceptions.class)
-                .build();
-    }
-
     @Test
+    @WithMockUser(username = "John", roles = {"USER"})
     public void shouldSaveAuthorObject() throws Exception {
         Mockito.doNothing().when(authorService).save(ArgumentMatchers.any(Author.class));
 

@@ -1,5 +1,6 @@
 package org.bulletin_board.domain;
 
+import jdk.jfr.BooleanFlag;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.bulletin_board.domain.author.Author;
@@ -10,6 +11,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -30,8 +33,7 @@ public class Announcement {
     String name;
 
     @Column(name = "creation_date")
-    @Temporal(TemporalType.DATE)
-    Date creationDate;
+    LocalDateTime creationDate;
 
     @NotBlank(message = "Announcement text cannot be empty")
     String text;
@@ -44,15 +46,17 @@ public class Announcement {
     @Valid
     @ManyToOne(cascade = {CascadeType.MERGE},
             fetch = FetchType.EAGER)
-    @JoinColumn(name = "FK_Ad_Author")
+    @JoinColumn(name = "FK_An_Author")
     Author author;
 
     @NotNull(message = "Rubric cannot be null")
     @Valid
     @ManyToOne(cascade = {CascadeType.MERGE},
             fetch = FetchType.EAGER)
-    @JoinColumn(name = "FK_Ad_Rubric")
+    @JoinColumn(name = "FK_An_Rubric")
     Rubric rubric;
+
+    boolean active;
 
     @Override
     public String toString() {

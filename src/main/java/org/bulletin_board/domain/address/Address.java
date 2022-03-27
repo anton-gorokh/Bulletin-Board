@@ -4,9 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.*;
 
 @Entity
 @Getter
@@ -25,12 +23,14 @@ public class Address {
         @Enumerated(EnumType.STRING)
         Country country;
 
+        @Size(max = 189)
         @NotBlank(message = "City cannot be empty")
         String city;
 
         @NotBlank(message = "Street cannot be empty")
         String street;
 
+        @Min(0)
         @PositiveOrZero(message = "Home number cannot be less than zero")
         @Column(name = "home_number")
         int homeNumber;

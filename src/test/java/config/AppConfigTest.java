@@ -1,10 +1,10 @@
 package config;
 
 import org.bulletin_board.config.EmailConfig;
-import org.bulletin_board.config.ValidatorConfig;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -20,13 +20,13 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan(basePackages = {
-        "org.bulletin_board.dao",
         "org.bulletin_board.service",
         "org.bulletin_board.controller"})
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableTransactionManagement
-@Import({EmailConfig.class, ValidatorConfig.class})
-@PropertySource("classpath:db_test.properties")
+@Import({EmailConfig.class})
+@PropertySource({"classpath:db_test.properties", "classpath:credential.properties"})
+@EnableJpaRepositories(basePackages = "org.bulletin_board.repository")
 public class AppConfigTest implements WebMvcConfigurer, EnvironmentAware {
 
     private Environment environment;

@@ -10,6 +10,7 @@ import org.bulletin_board.domain.author.Email;
 import org.bulletin_board.domain.author.Phone;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
@@ -49,7 +50,7 @@ public final class Util {
         Announcement announcement = Announcement.builder()
                 .name(name)
                 .pay(new BigDecimal(777))
-                .creationDate(new Date())
+                .creationDate(LocalDateTime.now())
                 .text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
                         "Nulla rhoncus sem mattis lectus luctus viverra. " +
                         "Nullam placerat dui ac blandit posuere.")
