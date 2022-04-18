@@ -1,0 +1,98 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="anton-gorokh" id="15">
+        <preConditions>
+            <sqlCheck expectedResult="0">select count(1) from address_ where city_ = 'Odessa'</sqlCheck>
+        </preConditions>
+        <insert tableName="address_">
+            <column name="country_" value="UA"/>
+            <column name="city_" value="Odessa"/>
+            <column name="street_" value="Derybasivska"/>
+            <column name="postal_code_" value="65000"/>
+        </insert>
+        <insert tableName="address_">
+            <column name="country_" value="UA"/>
+            <column name="city_" value="Kraków"/>
+            <column name="street_" value="Bociana"/>
+            <column name="postal_code_" value="31000"/>
+        </insert>
+        <rollback>
+            <delete tableName="address_"/>
+        </rollback>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="16">
+        <preConditions>
+            <sqlCheck expectedResult="0">select count(1) from author_ where last_name_ = 'Gorokh'</sqlCheck>
+        </preConditions>
+        <insert tableName="author_">
+            <column name="created_at_" valueComputed="NOW()"/>
+            <column name="updated_at_" valueComputed="NOW()"/>
+            <column name="user_name_" value="anton-gorokh"/>
+            <column name="password_" value="$2a$10$LzwW0kK4vBPmZXtyk/MsC.rwo76OMK9K29rDkScr3mPUiELptSqka"/>
+            <column name="first_name_" value="Anton"/>
+            <column name="last_name_" value="Gorokh"/>
+            <column name="age_" value="18"/>
+            <column name="address_id_" valueComputed="(select id_ from address_ where city_ = 'Odessa')"/>
+        </insert>
+        <rollback>
+            <delete tableName="author_"/>
+        </rollback>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="17">
+        <preConditions>
+            <sqlCheck expectedResult="0">select count(1) from phone_ where phone_number_ = '+380661234567'</sqlCheck>
+        </preConditions>
+        <insert tableName="phone_">
+            <column name="phone_number_" value="+380661234567"/>
+            <column name="author_id_" valueComputed="(select id_ from author_ where last_name_ = 'Gorokh')"/>
+        </insert>
+        <rollback>
+            <delete tableName="phone_"/>
+        </rollback>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="18">
+        <preConditions>
+            <sqlCheck expectedResult="0">select count(1) from email_ where name_ = 'test@mail.com'</sqlCheck>
+        </preConditions>
+        <insert tableName="email_">
+            <column name="name_" value="test@mail.com"/>
+            <column name="author_id_" valueComputed="(select id_ from author_ where last_name_ = 'Gorokh')"/>
+        </insert>
+        <rollback>
+            <delete tableName="email_"/>
+        </rollback>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="19">
+        <preConditions>
+            <sqlCheck expectedResult="0">select count(1) from rubric_ where name_ = 'IT'</sqlCheck>
+        </preConditions>
+        <insert tableName="rubric_">
+            <column name="name_" value="IT"/>
+        </insert>
+        <rollback>
+            <delete tableName="rubric_"/>
+        </rollback>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="20">
+        <preConditions>
+            <sqlCheck expectedResult="0">select count(1) from announcement_ where name_ = 'Java middle developer'</sqlCheck>
+        </preConditions>
+        <insert tableName="announcement_">
+            <column name="created_at_" valueComputed="NOW()"/>
+            <column name="updated_at_" valueComputed="NOW()"/>
+            <column name="name_" value="Java middle developer"/>
+            <column name="text_" value="We look for a super extra mega cool java middle developer"/>
+            <column name="pay_" value="1500.00"/>
+            <column name="active_" valueBoolean="true"/>
+            <column name="author_id_" valueComputed="(select id_ from author_ where last_name_ = 'Gorokh')"/>
+            <column name="rubric_id_" valueComputed="(select id_ from rubric_ where name_ = 'IT')"/>
+        </insert>
+        <rollback>
+            <delete tableName="announcement_"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

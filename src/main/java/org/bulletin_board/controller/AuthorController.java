@@ -1,49 +1,55 @@
 package org.bulletin_board.controller;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.bulletin_board.domain.author.Author;
-import org.bulletin_board.dto.AuthorDTO;
-import org.bulletin_board.service.AuthorService;
+import org.bulletin_board.dto.author.AuthorDto;
+import org.bulletin_board.service.author.AuthorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
 @RestController
-@AllArgsConstructor
-@RequestMapping("author")
+@RequestMapping("/author")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthorController {
-    final
     AuthorService authorService;
 
-    @GetMapping("/find/{id}")
-    public Author findById(@PathVariable("id") int id) {
-        return authorService.findById(id);
-    }
-
-
-    @GetMapping("/find/dto/{id}")
-    public AuthorDTO findDtoById(@PathVariable("id") int id) {
-        Author author = authorService.findById(id);
-        return new AuthorDTO(author);
+    @Autowired
+    public AuthorController(AuthorService authorService) {
+        this.authorService = authorService;
     }
 
     @Secured("ROLE_USER")
-    @PostMapping("/save")
-    public void save(@RequestBody @Valid Author author) {
-        authorService.save(author);
+    @GetMapping("/{id}")
+    public AuthorDto find(@PathVariable("id") Long id) {
+        return authorService.findById(id);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteById(@PathVariable int id) {
+    @Secured("ROLE_USER")
+    @PostMapping("/")
+    public long save(@RequestBody @Valid AuthorDto author) throws Exception {
+        return authorService.save(author);
+    }
+
+
+    @Secured("ROLE_USER")
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
         authorService.deleteById(id);
     }
 
-    @PutMapping("/update")
-    public void updateMan(@RequestBody @Valid Author author) {
+    @Secured("ROLE_USER")
+    @PutMapping("/")
+    public void update(@RequestBody @Valid AuthorDto author) {
         authorService.update(author);
     }
 }

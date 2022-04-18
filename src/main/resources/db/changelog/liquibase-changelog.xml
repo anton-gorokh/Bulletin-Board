@@ -1,0 +1,226 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="anton-gorokh" id="1">
+        <createSequence sequenceName="address_id_seq_" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="2">
+        <createTable tableName="address_">
+            <column name="id_" type="BIGINT" autoIncrement="false" defaultValueSequenceNext="address_id_seq_">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="country_" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city_" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="street_" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="postal_code_" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="anton-gorokh" id="3">
+        <createSequence sequenceName="author_id_seq_" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="4">
+        <createTable tableName="author_">
+            <column name="id_" type="BIGINT" autoIncrement="false" defaultValueSequenceNext="author_id_seq_">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="user_name_" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="UC_238745vn203v"/>
+            </column>
+            <column name="password_" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at_" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at_" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name_" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name_" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age_" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address_id_" type="BIGINT">
+                <constraints referencedTableName="address_"
+                             referencedColumnNames="id_"
+                             foreignKeyName="FK_AUTHOR_ADDRESS_235n283vn5"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="anton-gorokh" id="5">
+        <createSequence sequenceName="email_id_seq_" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="6">
+        <createTable tableName="email_">
+            <column name="id_" type="BIGINT" autoIncrement="false" defaultValueSequenceNext="email_id_seq_">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name_" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author_id_" type="BIGINT">
+                <constraints referencedTableName="author_"
+                             referencedColumnNames="id_"
+                             foreignKeyName="FK_EMAIL_AUTHOR_q937845hn"
+                             nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="anton-gorokh" id="7">
+        <createSequence sequenceName="phone_id_seq_" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="8">
+        <createTable tableName="phone_">
+            <column name="id_" type="BIGINT" autoIncrement="false" defaultValueSequenceNext="phone_id_seq_">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="phone_number_" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author_id_" type="BIGINT">
+                <constraints referencedTableName="author_"
+                             referencedColumnNames="id_"
+                             foreignKeyName="FK_PHONE_AUTHOR_q937845hn"
+                             nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="anton-gorokh" id="9">
+        <createSequence sequenceName="rubric_id_seq_" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="10">
+        <createTable tableName="rubric_">
+            <column name="id_" type="BIGINT" autoIncrement="false" defaultValueSequenceNext="rubric_id_seq_">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name_" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="anton-gorokh" id="11">
+        <createSequence sequenceName="announcement_id_seq_" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="12">
+        <createTable tableName="announcement_">
+            <column name="id_" type="BIGINT" autoIncrement="false" defaultValueSequenceNext="announcement_id_seq_">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="created_at_" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at_" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name_" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text_" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pay_" type="DECIMAL(10, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active_" type="BOOLEAN" defaultValue="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author_id_" type="BIGINT">
+                <constraints referencedTableName="author_"
+                             referencedColumnNames="id_"
+                             foreignKeyName="FK_ANNOUNCEMENT_AUTHOR_q4537bn821"
+                             nullable="false"/>
+            </column>
+            <column name="rubric_id_" type="BIGINT">
+                <constraints referencedTableName="rubric_"
+                             referencedColumnNames="id_"
+                             foreignKeyName="FK_ANNOUNCEMENT_RUBRIC_230748v"
+                             nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="anton-gorokh" id="13">
+        <createSequence sequenceName="announcementfilter_id_seq_" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="14">
+        <createTable tableName="announcement_filter_">
+            <column name="id_" type="BIGINT" autoIncrement="false" defaultValueSequenceNext="announcementfilter_id_seq_">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="price_from_" type="DECIMAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price_to_" type="DECIMAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title_" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rubric_id_" type="BIGINT">
+                <constraints referencedTableName="rubric_"
+                             referencedColumnNames="id_"
+                             foreignKeyName="FK_ANNOUNCEMENTFILTER_RUBRIC_145817b"/>
+            </column>
+            <column name="author_id_" type="BIGINT">
+                <constraints referencedTableName="author_"
+                             referencedColumnNames="id_"
+                             foreignKeyName="FK_ANNOUNCEMENTFILTER_AUTHOR_52b78n13"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="anton-gorokh" id="24">
+        <createSequence sequenceName="role_id_seq_" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="25">
+        <createTable tableName="role_">
+            <column name="id_" type="BIGINT" autoIncrement="false" defaultValueSequenceNext="role_id_seq_">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name_" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="UC_045yv2350v20"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="anton-gorokh" id="26">
+        <createTable tableName="author_role_">
+            <column name="author_id_" type="BIGINT">
+                <constraints referencedTableName="author_"
+                             referencedColumnNames="id_"
+                             foreignKeyName="FK_Author_1495v19145bv1"
+                             nullable="false"/>
+            </column>
+            <column name="role_id_" type="BIGINT">
+                <constraints referencedTableName="role_"
+                             referencedColumnNames="id_"
+                             foreignKeyName="FK_Role_193854ny145vv"
+                             nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="anton-gorokh" id="0">
+        <tagDatabase tag="testsTag"/>
+    </changeSet>
+</databaseChangeLog>

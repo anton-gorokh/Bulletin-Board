@@ -1,22 +1,72 @@
 package org.bulletin_board.service;
 
-import org.bulletin_board.domain.Announcement;
-import org.bulletin_board.domain.Rubric;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+import org.bulletin_board.domain.board.Announcement;
+import org.bulletin_board.domain.board.Rubric;
+import org.bulletin_board.repository.AnnouncementRepository;
+import org.bulletin_board.service.author.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
-public interface AnnouncementService extends CrudService<Announcement> {
-    List<Announcement> findByRubric(Rubric rubric);
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Service
+public class AnnouncementService {
+    AnnouncementRepository announcementRepository;
 
-    List<Announcement> findByDateRange(LocalDateTime dateFrom, LocalDateTime dateTo);
+    EmailService eService;
 
-    List<Announcement> findByPriceRange(BigDecimal priceFrom, BigDecimal priceTo);
+    @Autowired
+    public AnnouncementService(AnnouncementRepository announcementRepository, EmailService eService) {
+        this.announcementRepository = announcementRepository;
+        this.eService = eService;
+    }
 
-    List<Announcement> findAllContainingWord(String word);
+    public void save(Announcement announcement) {
+        announcementRepository.save(announcement);
+        eService.sendEmails(announcement);
+    }
 
-    void deleteInactiveAnnouncements();
+    public Announcement findById(Long id) {
+        return announcementRepository.findById(id)
+                .orElseThrow(() -> new NullPointerException("There is no announcement with such id. "));
+    }
 
-    void deleteAllAnnouncementsByAuthorId(int authorId);
+    public List<Announcement> findByRubric(Rubric rubric) {
+        List<Announcement> byRubric = announcementRepository.findByRubric(rubric);
+        if (byRubric.isEmpty()) {
+            throw new NullPointerException("There is no announcements with such Rubric. ");
+        }
+
+        return byRubric;
+    }
+
+    public List<Announcement> findAllContainingWord(String word) {
+        List<Announcement> allByTextContaining = announcementRepository.findAllByTextContaining(word);
+        if (allByTextContaining.isEmpty()) {
+            throw new NullPointerException("There is no announcements containing such word. ");
+        }
+
+        return allByTextContaining;
+    }
+
+    public void update(Announcement announcement) {
+        announcementRepository.save(announcement);
+    }
+
+    public void deleteById(Long id) {
+        announcementRepository.deleteById(id);
+    }
+
+    public void deleteAllAnnouncementsByAuthorId(Long authorId) {
+        announcementRepository.deleteAllByAuthorId(authorId);
+    }
+
+    @Scheduled(cron = "59 59 23 * * ?")
+    public void deleteInactiveAnnouncements() {
+        announcementRepository.deleteAllByActiveFalse();
+    }
 }
