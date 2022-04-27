@@ -1,61 +1,60 @@
 package org.bulletin_board.domain.board;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.FieldDefaults;
+import lombok.*;
 import org.bulletin_board.domain.AbstractEntity;
 import org.bulletin_board.domain.board.author.Author;
+import org.bulletin_board.dto.util.converters.LocalDateConverter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class AnnouncementFilter extends AbstractEntity {
 
     @PositiveOrZero
     @Column(scale = 2, nullable = false)
-    BigDecimal priceFrom;
+    private BigDecimal priceFrom;
 
     @PositiveOrZero
     @Column(scale = 2, nullable = false)
-    BigDecimal priceTo;
+    private BigDecimal priceTo;
+
+    @Convert(converter = LocalDateConverter.class)
+    private LocalDate from;
+
+    @Convert(converter = LocalDateConverter.class)
+    private LocalDate to;
 
     @Column(nullable = false)
-    String title;
+    private String title;
 
     @NotNull
     @Valid
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    Category category;
+    private Category category;
 
     @NotNull
     @Valid
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    Author author;
+    private Author author;
 
-    @Builder
-    public AnnouncementFilter(Long id, BigDecimal priceFrom, BigDecimal priceTo, Category category, Author author, String title) {
+    public AnnouncementFilter(Long id, BigDecimal priceFrom, BigDecimal priceTo, LocalDate from, LocalDate to,
+                              String title, Category category, Author author) {
         super(id);
         this.priceFrom = priceFrom;
         this.priceTo = priceTo;
+        this.from = from;
+        this.to = to;
+        this.title = title;
         this.category = category;
         this.author = author;
-        this.title = title;
     }
 }

@@ -203,6 +203,15 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet author="anton-gorokh" id="27">
+        <addColumn tableName="announcement_filter_">
+            <column name="from_" type="DATE"/>
+        </addColumn>
+
+        <addColumn tableName="announcement_filter_">
+            <column name="to_" type="DATE"/>
+        </addColumn>
+    </changeSet>
 
     <changeSet author="anton-gorokh" id="0">
         <tagDatabase tag="testsTag"/>

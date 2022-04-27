@@ -13,14 +13,14 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class AuthorDto {
-    Long id;
-    String userName;
-    String password;
-    String firstName;
-    String lastName;
-    int age;
+    private Long id;
+    private String userName;
+    private String password;
+    private String firstName;
+    private String lastName;
+    private int age;
 
-    SimpleValue address;
-    List<SimpleValue> phones;
-    List<SimpleValue> emails;
+    private SimpleValue address;
+    private List<SimpleValue> phones;
+    private List<SimpleValue> emails;
 }

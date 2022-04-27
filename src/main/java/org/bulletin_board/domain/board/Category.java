@@ -9,6 +9,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import org.bulletin_board.domain.AbstractEntity;
+import org.bulletin_board.domain.SimpleValueConvertible;
+import org.bulletin_board.dto.SimpleValue;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,7 +23,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class Category extends AbstractEntity {
+public class Category extends AbstractEntity implements SimpleValueConvertible {
 
     @NotBlank
     private String name;
@@ -37,5 +39,10 @@ public class Category extends AbstractEntity {
         super(id);
         this.name = name;
         this.announcements = announcements;
+    }
+
+    @Override
+    public SimpleValue toSimpleValue() {
+        return new SimpleValue(this.id, this.name);
     }
 }
