@@ -3,7 +3,6 @@ package org.bulletin_board.domain.board;
 import lombok.*;
 import org.bulletin_board.domain.AbstractEntity;
 import org.bulletin_board.domain.board.author.Author;
-import org.bulletin_board.dto.util.converters.LocalDateConverter;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -20,17 +19,15 @@ import java.time.LocalDate;
 public class AnnouncementFilter extends AbstractEntity {
 
     @PositiveOrZero
-    @Column(scale = 2, nullable = false)
+    @Column(scale = 2)
     private BigDecimal priceFrom;
 
     @PositiveOrZero
-    @Column(scale = 2, nullable = false)
+    @Column(scale = 2)
     private BigDecimal priceTo;
 
-    @Convert(converter = LocalDateConverter.class)
     private LocalDate from;
 
-    @Convert(converter = LocalDateConverter.class)
     private LocalDate to;
 
     @Column(nullable = false)
