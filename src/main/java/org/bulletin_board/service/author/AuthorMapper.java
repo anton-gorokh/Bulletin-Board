@@ -7,6 +7,7 @@ import org.bulletin_board.repository.AddressRepository;
 import org.bulletin_board.repository.EmailRepository;
 import org.bulletin_board.repository.PhoneRepository;
 import org.bulletin_board.service.util.MapperUtil;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -29,11 +30,10 @@ public class AuthorMapper {
 
     public AuthorDto mapToDto(Author author) {
         return AuthorDto.builder()
-                .id(author.getId())
                 .firstName(author.getFirstName())
                 .lastName(author.getLastName())
                 .age(author.getAge())
-                .address(MapperUtil.toSimpleValue(author.getAddress()))
+                .address(author.getAddress().toSimpleValue())
                 .phones(MapperUtil.toSimpleValues(author.getPhones()))
                 .emails(MapperUtil.toSimpleValues(author.getEmails()))
                 .build();
@@ -41,7 +41,6 @@ public class AuthorMapper {
 
     public Author mapToEntity(AuthorDto authorDto) {
         return Author.builder()
-                .id(authorDto.getId())
                 .firstName(authorDto.getFirstName())
                 .lastName(authorDto.getLastName())
                 .age(authorDto.getAge())

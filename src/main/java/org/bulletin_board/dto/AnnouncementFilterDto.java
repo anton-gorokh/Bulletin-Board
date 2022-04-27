@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bulletin_board.dto.author.AuthorDto;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -21,6 +22,9 @@ public class AnnouncementFilterDto {
     private LocalDate to;
     private String title;
 
+    @NotNull
     private SimpleValue category;
+
+    @NotNull
     private AuthorDto author;
 }

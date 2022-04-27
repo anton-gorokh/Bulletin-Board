@@ -46,6 +46,7 @@ public class AnnouncementFilter extends AbstractEntity {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     private Author author;
 
+    @Builder
     public AnnouncementFilter(Long id, BigDecimal priceFrom, BigDecimal priceTo, LocalDate from, LocalDate to,
                               String title, Category category, Author author) {
         super(id);
