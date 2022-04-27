@@ -1,27 +1,13 @@
 package org.bulletin_board.domain.board.author;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.FieldDefaults;
+import lombok.*;
 import org.bulletin_board.domain.AuditModel;
 import org.bulletin_board.domain.Role;
 import org.bulletin_board.domain.board.Announcement;
 import org.bulletin_board.domain.board.Announcement_;
 import org.bulletin_board.domain.board.address.Address;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -31,40 +17,38 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
 @Getter
 @Setter
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-@ToString
-@Entity
 public class Author extends AuditModel {
     public static final String FULL_NAME_DELIMITER = " ";
 
     @NotBlank
     @Column(nullable = false, unique = true)
-    String userName;
+    private String userName;
 
     @Column(nullable = false)
-    String password;
+    private String password;
 
     @Size(max = 64)
     @NotBlank(message = "First name cannot be empty")
     @Column(nullable = false)
-    String firstName;
+    private String firstName;
 
     @Size(max = 64)
     @NotBlank(message = "Second name cannot be empty")
     @Column(nullable = false)
-    String lastName;
+    private String lastName;
 
     @Min(value = 18, message = "Age cannot be less than 18")
     @Column(nullable = false)
-    int age;
+    private int age;
 
     @NotNull(message = "Address cannot be null")
     @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
-    Address address;
+    private Address address;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -72,16 +56,16 @@ public class Author extends AuditModel {
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    Set<Role> roles;
+    private Set<Role> roles;
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = Email_.AUTHOR)
-    Set<@NotNull @Valid Email> emails;
+    private Set<@NotNull @Valid Email> emails;
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = Phone_.AUTHOR)
-    Set<@NotNull @Valid Phone> phones;
+    private Set<@NotNull @Valid Phone> phones;
 
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = Announcement_.AUTHOR)
-    Set<@NotNull @Valid Announcement> announcements;
+    private Set<@NotNull @Valid Announcement> announcements;
 
     public String getFullName() {
         return this.firstName + FULL_NAME_DELIMITER + this.lastName;

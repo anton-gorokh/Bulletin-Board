@@ -3,7 +3,7 @@ package org.bulletin_board.service;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.bulletin_board.domain.board.Announcement;
-import org.bulletin_board.domain.board.Rubric;
+import org.bulletin_board.domain.board.Category;
 import org.bulletin_board.repository.AnnouncementRepository;
 import org.bulletin_board.service.author.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +35,8 @@ public class AnnouncementService {
                 .orElseThrow(() -> new NullPointerException("There is no announcement with such id. "));
     }
 
-    public List<Announcement> findByRubric(Rubric rubric) {
-        List<Announcement> byRubric = announcementRepository.findByRubric(rubric);
+    public List<Announcement> findByRubric(Category category) {
+        List<Announcement> byRubric = announcementRepository.findByCategoryId(category.getId());
         if (byRubric.isEmpty()) {
             throw new NullPointerException("There is no announcements with such Rubric. ");
         }

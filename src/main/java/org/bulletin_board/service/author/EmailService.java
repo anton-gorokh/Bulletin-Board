@@ -26,7 +26,7 @@ public class EmailService {
 
     private List<String> findEmails(Announcement announcement) {
         return emailRepository.findEmails(
-                announcement.getRubric(),
+                announcement.getCategory(),
                 announcement.getName(),
                 announcement.getPay());
     }
@@ -46,7 +46,7 @@ public class EmailService {
                         "Author: %s, %s\n" +
                         "Pay: %s\n\n" +
                         "Text: %s",
-                announcement.getRubric(),
+                announcement.getCategory(),
                 announcement.getName(),
                 announcement.getAuthor(),
                 announcement.getPay(),

@@ -42,7 +42,7 @@ public class AnnouncementFilter extends AbstractEntity {
     @NotNull
     @Valid
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    Rubric rubric;
+    Category category;
 
     @NotNull
     @Valid
@@ -50,11 +50,11 @@ public class AnnouncementFilter extends AbstractEntity {
     Author author;
 
     @Builder
-    public AnnouncementFilter(Long id, BigDecimal priceFrom, BigDecimal priceTo, Rubric rubric, Author author, String title) {
+    public AnnouncementFilter(Long id, BigDecimal priceFrom, BigDecimal priceTo, Category category, Author author, String title) {
         super(id);
         this.priceFrom = priceFrom;
         this.priceTo = priceTo;
-        this.rubric = rubric;
+        this.category = category;
         this.author = author;
         this.title = title;
     }

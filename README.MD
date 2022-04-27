@@ -5,8 +5,8 @@ This web application should have the following features:
 Rubric with/without announcements /
 Announcement (name, publication date, text, pay, author(phones(separate entity), 
 address(separate entity), name, email(separate entity)).
-- Edit an announcement, rubric and author's personal information. 
-- Delete announcement/rubric/author. 
+- Edit an announcement, category and author's personal information. 
+- Delete announcement/category/author. 
 - Delete all announcements of the author. 
 - Show announcements from one category and several categories. 
 - Filtering (by author, by keyword, by date). 

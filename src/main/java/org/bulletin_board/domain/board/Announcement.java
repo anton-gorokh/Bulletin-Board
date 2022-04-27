@@ -29,40 +29,40 @@ import java.time.Instant;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString
 public class Announcement extends AuditModel {
-    @NotBlank(message = "Announcement name cannot be empty")
+    @NotBlank
     @Column(nullable = false)
     String name;
 
-    @NotBlank(message = "Announcement text cannot be empty")
+    @NotBlank
     @Column(nullable = false)
     String text;
 
-    @PositiveOrZero(message = "Pay cannot be less than zero")
+    @PositiveOrZero
     @Column(scale = 2)
     BigDecimal pay;
 
     @Column(nullable = false)
-    boolean active;
+    Boolean active;
 
     @Valid
-    @NotNull(message = "Author cannot be null")
+    @NotNull
     @ManyToOne(optional = false)
     Author author;
 
     @Valid
-    @NotNull(message = "Rubric cannot be null")
+    @NotNull
     @ManyToOne(optional = false)
-    Rubric rubric;
+    Category category;
 
     @Builder
     public Announcement(Long id, Instant createdAt, Instant updatedAt, String name, String text, BigDecimal pay,
-                        Author author, Rubric rubric, boolean active) {
+                        Author author, Category category, boolean active) {
         super(id, createdAt, updatedAt);
         this.name = name;
         this.text = text;
         this.pay = pay;
         this.author = author;
-        this.rubric = rubric;
+        this.category = category;
         this.active = active;
     }
 }

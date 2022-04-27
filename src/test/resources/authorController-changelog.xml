@@ -68,13 +68,13 @@
     </changeSet>
     <changeSet author="anton-gorokh" id="19">
         <preConditions>
-            <sqlCheck expectedResult="0">select count(1) from rubric_ where name_ = 'IT'</sqlCheck>
+            <sqlCheck expectedResult="0">select count(1) from category_ where name_ = 'IT'</sqlCheck>
         </preConditions>
-        <insert tableName="rubric_">
+        <insert tableName="category_">
             <column name="name_" value="IT"/>
         </insert>
         <rollback>
-            <delete tableName="rubric_"/>
+            <delete tableName="category_"/>
         </rollback>
     </changeSet>
     <changeSet author="anton-gorokh" id="20">
@@ -89,7 +89,7 @@
             <column name="pay_" value="1500.00"/>
             <column name="active_" valueBoolean="true"/>
             <column name="author_id_" valueComputed="(select id_ from author_ where last_name_ = 'Gorokh')"/>
-            <column name="rubric_id_" valueComputed="(select id_ from rubric_ where name_ = 'IT')"/>
+            <column name="category_id_" valueComputed="(select id_ from category_ where name_ = 'IT')"/>
         </insert>
         <rollback>
             <delete tableName="announcement_"/>

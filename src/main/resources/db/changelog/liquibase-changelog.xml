@@ -12,21 +12,12 @@
             <column name="id_" type="BIGINT" autoIncrement="false" defaultValueSequenceNext="address_id_seq_">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="country_" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="city_" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="street_" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="postal_code_" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
+            <column name="country_" type="VARCHAR(255)"/>
+            <column name="city_" type="VARCHAR(255)"/>
+            <column name="street_" type="VARCHAR(255)"/>
+            <column name="postal_code_" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
-
     <changeSet author="anton-gorokh" id="3">
         <createSequence sequenceName="author_id_seq_" startValue="1" incrementBy="1"/>
     </changeSet>
@@ -63,7 +54,6 @@
             </column>
         </createTable>
     </changeSet>
-
     <changeSet author="anton-gorokh" id="5">
         <createSequence sequenceName="email_id_seq_" startValue="1" incrementBy="1"/>
     </changeSet>
@@ -83,7 +73,6 @@
             </column>
         </createTable>
     </changeSet>
-
     <changeSet author="anton-gorokh" id="7">
         <createSequence sequenceName="phone_id_seq_" startValue="1" incrementBy="1"/>
     </changeSet>
@@ -103,13 +92,12 @@
             </column>
         </createTable>
     </changeSet>
-
     <changeSet author="anton-gorokh" id="9">
-        <createSequence sequenceName="rubric_id_seq_" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="category_id_seq_" startValue="1" incrementBy="1"/>
     </changeSet>
     <changeSet author="anton-gorokh" id="10">
-        <createTable tableName="rubric_">
-            <column name="id_" type="BIGINT" autoIncrement="false" defaultValueSequenceNext="rubric_id_seq_">
+        <createTable tableName="category_">
+            <column name="id_" type="BIGINT" autoIncrement="false" defaultValueSequenceNext="category_id_seq_">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="name_" type="VARCHAR(255)">
@@ -117,7 +105,6 @@
             </column>
         </createTable>
     </changeSet>
-
     <changeSet author="anton-gorokh" id="11">
         <createSequence sequenceName="announcement_id_seq_" startValue="1" incrementBy="1"/>
     </changeSet>
@@ -150,15 +137,14 @@
                              foreignKeyName="FK_ANNOUNCEMENT_AUTHOR_q4537bn821"
                              nullable="false"/>
             </column>
-            <column name="rubric_id_" type="BIGINT">
-                <constraints referencedTableName="rubric_"
+            <column name="category_id_" type="BIGINT">
+                <constraints referencedTableName="category_"
                              referencedColumnNames="id_"
-                             foreignKeyName="FK_ANNOUNCEMENT_RUBRIC_230748v"
+                             foreignKeyName="FK_ANNOUNCEMENT_CATEGORY_230748v"
                              nullable="false"/>
             </column>
         </createTable>
     </changeSet>
-
     <changeSet author="anton-gorokh" id="13">
         <createSequence sequenceName="announcementfilter_id_seq_" startValue="1" incrementBy="1"/>
     </changeSet>
@@ -176,10 +162,10 @@
             <column name="title_" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="rubric_id_" type="BIGINT">
-                <constraints referencedTableName="rubric_"
+            <column name="category_id_" type="BIGINT">
+                <constraints referencedTableName="category_"
                              referencedColumnNames="id_"
-                             foreignKeyName="FK_ANNOUNCEMENTFILTER_RUBRIC_145817b"/>
+                             foreignKeyName="FK_ANNOUNCEMENTFILTER_CATEGORY_145817b"/>
             </column>
             <column name="author_id_" type="BIGINT">
                 <constraints referencedTableName="author_"
@@ -188,7 +174,6 @@
             </column>
         </createTable>
     </changeSet>
-
     <changeSet author="anton-gorokh" id="24">
         <createSequence sequenceName="role_id_seq_" startValue="1" incrementBy="1"/>
     </changeSet>
@@ -202,7 +187,6 @@
             </column>
         </createTable>
     </changeSet>
-
     <changeSet author="anton-gorokh" id="26">
         <createTable tableName="author_role_">
             <column name="author_id_" type="BIGINT">

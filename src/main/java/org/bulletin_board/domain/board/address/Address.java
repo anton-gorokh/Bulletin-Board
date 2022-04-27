@@ -19,26 +19,20 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Address extends AbstractEntity {
-    @NotNull(message = "Country must be selected")
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    Country country;
+    private Country country;
 
-    @NotBlank(message = "City cannot be empty")
     @Column(nullable = false)
-    String city;
+    private String city;
 
-    @NotBlank(message = "Street cannot be empty")
     @Column(nullable = false)
-    String street;
+    private String street;
 
-    @NotBlank(message = "Postal code cannot be empty")
     @Column(nullable = false)
-    String postalCode;
+    private String postalCode;
 
     @Builder
     public Address(Long id, Country country, String city, String street, String postalCode) {
