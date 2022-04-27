@@ -1,4 +1,4 @@
-package org.bulletin_board.service;
+package org.bulletin_board.service.author;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

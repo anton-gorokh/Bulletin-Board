@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class CategoryService {
+public class CategoryService implements CrudService<SimpleValue> {
     private final CategoryRepository repository;
 
     @Autowired
@@ -21,21 +21,24 @@ public class CategoryService {
         this.repository = repository;
     }
 
-    public SimpleValue getById(Long id) {
-        return repository.getById(id).toSimpleValue();
-    }
-
     public List<SimpleValue> getAll() {
         return MapperUtil.toSimpleValues(repository.findAll());
     }
 
-    public void save(SimpleValue dto) {
+    @Override
+    public SimpleValue getById(Long id) {
+        return repository.getById(id).toSimpleValue();
+    }
+
+    @Override
+    public Long save(SimpleValue dto) {
         if (dto.getId() != null) {
             throw new IllegalArgumentException("Dto has id");
         }
-        repository.save(Category.builder().name(dto.getName()).build());
+        return repository.save(Category.builder().name(dto.getName()).build()).getId();
     }
 
+    @Override
     public void update(SimpleValue dto, Long id) {
         Category entity = Category.builder()
                 .id(dto.getId())
@@ -44,6 +47,7 @@ public class CategoryService {
         repository.save(entity);
     }
 
+    @Override
     public void deleteById(Long id) {
         repository.deleteById(id);
     }

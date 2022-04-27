@@ -1,5 +1,6 @@
 package org.bulletin_board.domain;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
@@ -12,6 +13,7 @@ import javax.persistence.MappedSuperclass;
 import java.time.Instant;
 
 @ToString(callSuper = true)
+@Getter
 @NoArgsConstructor
 @MappedSuperclass
 public abstract class AuditModel extends AbstractEntity {

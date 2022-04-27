@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 
 @Service
 @Transactional
-public class AnnouncementFilterMapper {
+public class AnnouncementFilterMapper implements SimpleDtoMapper<AnnouncementFilter, AnnouncementFilterDto> {
     private final AuthorMapper authorMapper;
     private final CategoryRepository categoryRepository;
     private final AuthorRepository authorRepository;

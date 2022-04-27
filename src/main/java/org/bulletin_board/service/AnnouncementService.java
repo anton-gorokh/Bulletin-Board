@@ -1,72 +1,63 @@
 package org.bulletin_board.service;
 
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import org.bulletin_board.domain.board.Announcement;
-import org.bulletin_board.domain.board.Category;
+import org.bulletin_board.dto.AnnouncementDto;
 import org.bulletin_board.repository.AnnouncementRepository;
 import org.bulletin_board.service.author.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.transaction.Transactional;
 
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Service
-public class AnnouncementService {
-    AnnouncementRepository announcementRepository;
+@Transactional
+public class AnnouncementService implements CrudService<AnnouncementDto> {
+    private final AnnouncementRepository repository;
+    private final AnnouncementMapper mapper;
 
-    EmailService eService;
+    private final EmailService emailService;
 
-    @Autowired
-    public AnnouncementService(AnnouncementRepository announcementRepository, EmailService eService) {
-        this.announcementRepository = announcementRepository;
-        this.eService = eService;
+    public AnnouncementService(AnnouncementRepository repository, AnnouncementMapper mapper, EmailService emailService) {
+        this.repository = repository;
+        this.mapper = mapper;
+        this.emailService = emailService;
     }
 
-    public void save(Announcement announcement) {
-        announcementRepository.save(announcement);
-        eService.sendEmails(announcement);
+    @Override
+    public AnnouncementDto getById(Long id) {
+        return mapper.mapToDto(repository.getById(id));
     }
 
-    public Announcement findById(Long id) {
-        return announcementRepository.findById(id)
-                .orElseThrow(() -> new NullPointerException("There is no announcement with such id. "));
-    }
-
-    public List<Announcement> findByRubric(Category category) {
-        List<Announcement> byRubric = announcementRepository.findByCategoryId(category.getId());
-        if (byRubric.isEmpty()) {
-            throw new NullPointerException("There is no announcements with such Rubric. ");
+    @Override
+    public Long save(AnnouncementDto dto) {
+        if (dto.getId() != null) {
+            throw new IllegalArgumentException("Dto has id");
         }
 
-        return byRubric;
+        Long savedId = repository.save(mapper.mapToEntity(dto)).getId();
+        emailService.sendEmails(repository.getById(savedId));
+        return savedId;
     }
 
-    public List<Announcement> findAllContainingWord(String word) {
-        List<Announcement> allByTextContaining = announcementRepository.findAllByTextContaining(word);
-        if (allByTextContaining.isEmpty()) {
-            throw new NullPointerException("There is no announcements containing such word. ");
-        }
-
-        return allByTextContaining;
+    @Override
+    public void update(AnnouncementDto dto, Long id) {
+        Announcement entity = mapper.mapToEntity(dto);
+        entity.setId(id);
+        repository.save(entity);
     }
 
-    public void update(Announcement announcement) {
-        announcementRepository.save(announcement);
-    }
-
+    @Override
     public void deleteById(Long id) {
-        announcementRepository.deleteById(id);
+        repository.deleteById(id);
     }
 
-    public void deleteAllAnnouncementsByAuthorId(Long authorId) {
-        announcementRepository.deleteAllByAuthorId(authorId);
+    public void deleteAllByAuthorId(Long authorId) {
+        repository.deleteAllByAuthorId(authorId);
     }
 
     @Scheduled(cron = "59 59 23 * * ?")
     public void deleteInactiveAnnouncements() {
-        announcementRepository.deleteAllByActiveFalse();
+        repository.deleteAllByActiveFalse();
     }
 }

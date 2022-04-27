@@ -13,6 +13,7 @@ import org.bulletin_board.domain.board.author.Author;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -34,6 +35,7 @@ public class Announcement extends AuditModel {
     String name;
 
     @NotBlank
+    @Lob
     @Column(nullable = false)
     String text;
 

@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 
 @Service
 @Transactional
-public class AnnouncementFilterService {
+public class AnnouncementFilterService implements CrudService<AnnouncementFilterDto> {
 
     private final AnnouncementFilterRepository repository;
     private final AnnouncementFilterMapper mapper;
@@ -21,23 +21,27 @@ public class AnnouncementFilterService {
         this.mapper = mapper;
     }
 
+    @Override
     public AnnouncementFilterDto getById(Long id) {
         return mapper.mapToDto(repository.getById(id));
     }
 
-    public long save(AnnouncementFilterDto dto) {
+    @Override
+    public Long save(AnnouncementFilterDto dto) {
         if (dto.getId() != null) {
             throw new IllegalArgumentException("Dto has id");
         }
         return repository.save(mapper.mapToEntity(dto)).getId();
     }
 
+    @Override
     public void update(AnnouncementFilterDto dto, Long id) {
         AnnouncementFilter entity = mapper.mapToEntity(dto);
         entity.setId(id);
         repository.save(entity);
     }
 
+    @Override
     public void deleteById(Long id) {
         repository.deleteById(id);
     }

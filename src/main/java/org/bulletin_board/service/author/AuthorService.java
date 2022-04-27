@@ -65,7 +65,7 @@ public class AuthorService {
     }
 
     public void deleteById(Long id) {
-        announcementService.deleteAllAnnouncementsByAuthorId(id);
+        announcementService.deleteAllByAuthorId(id);
         authorRepository.deleteById(id);
     }
 }

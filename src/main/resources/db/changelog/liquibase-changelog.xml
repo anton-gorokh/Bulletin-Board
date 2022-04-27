@@ -212,6 +212,18 @@
             <column name="to_" type="DATE"/>
         </addColumn>
     </changeSet>
+    <changeSet author="anton-gorokh" id="28">
+        <addColumn tableName="announcement_">
+            <column name="text_copy_" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <sql>
+            UPDATE announcement_ SET text_copy_ = text_
+        </sql>
+        <dropColumn tableName="announcement_" columnName="text_"/>
+        <renameColumn tableName="announcement_" oldColumnName="text_copy_" newColumnName="text_"/>
+    </changeSet>
 
     <changeSet author="anton-gorokh" id="0">
         <tagDatabase tag="testsTag"/>

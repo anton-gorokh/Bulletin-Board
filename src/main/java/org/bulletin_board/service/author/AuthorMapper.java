@@ -1,23 +1,20 @@
 package org.bulletin_board.service.author;
 
 import org.bulletin_board.domain.board.author.Author;
-import org.bulletin_board.dto.SimpleValue;
 import org.bulletin_board.dto.author.AuthorDto;
 import org.bulletin_board.repository.AddressRepository;
 import org.bulletin_board.repository.EmailRepository;
 import org.bulletin_board.repository.PhoneRepository;
+import org.bulletin_board.service.SimpleDtoMapper;
 import org.bulletin_board.service.util.MapperUtil;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class AuthorMapper {
+public class AuthorMapper implements SimpleDtoMapper<Author, AuthorDto> {
     private final PhoneRepository phoneRepository;
     private final EmailRepository emailRepository;
     private final AddressRepository addressRepository;

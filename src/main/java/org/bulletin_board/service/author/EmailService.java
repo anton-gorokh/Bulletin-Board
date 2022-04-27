@@ -32,26 +32,6 @@ public class EmailService {
     }
 
     public void sendEmails(Announcement announcement) {
-        List<String> emails = findEmails(announcement);
-        String[] array = emails.toArray(String[]::new);
-
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(array);
-        message.setSubject(String.format(
-                "New announcement: %s", announcement.getName()));
-        message.setText(String.format(
-                "A new announcement matching your filet has been added!\n\n" +
-                        "Rubric: %s\n" +
-                        "Title: %s\n" +
-                        "Author: %s, %s\n" +
-                        "Pay: %s\n\n" +
-                        "Text: %s",
-                announcement.getCategory(),
-                announcement.getName(),
-                announcement.getAuthor(),
-                announcement.getPay(),
-                announcement.getText()));
-
-        sender.send(message);
+        // TODO
     }
 }
