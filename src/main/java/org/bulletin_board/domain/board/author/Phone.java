@@ -9,6 +9,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import org.bulletin_board.domain.AbstractEntity;
+import org.bulletin_board.domain.SimpleValueConvertible;
+import org.bulletin_board.dto.SimpleValue;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +27,7 @@ import java.util.Objects;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity
-public class Phone extends AbstractEntity {
+public class Phone extends AbstractEntity implements SimpleValueConvertible {
 
     @Size(max = 16)
     @NotBlank(message = "Phone number cannot be empty")
@@ -40,6 +42,11 @@ public class Phone extends AbstractEntity {
         super(id);
         this.phoneNumber = phoneNumber;
         this.author = author;
+    }
+
+    @Override
+    public SimpleValue toSimpleValue() {
+        return new SimpleValue(this.id, this.phoneNumber);
     }
 
     @Override

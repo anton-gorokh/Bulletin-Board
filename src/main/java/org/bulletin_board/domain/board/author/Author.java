@@ -33,20 +33,20 @@ public class Author extends AuditModel {
     private String password;
 
     @Size(max = 64)
-    @NotBlank(message = "First name cannot be empty")
+    @NotBlank
     @Column(nullable = false)
     private String firstName;
 
     @Size(max = 64)
-    @NotBlank(message = "Second name cannot be empty")
+    @NotBlank
     @Column(nullable = false)
     private String lastName;
 
-    @Min(value = 18, message = "Age cannot be less than 18")
+    @Min(value = 18)
     @Column(nullable = false)
     private int age;
 
-    @NotNull(message = "Address cannot be null")
+    @NotNull
     @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
     private Address address;
 
@@ -83,23 +83,26 @@ public class Author extends AuditModel {
         this.lastName = columns[1];
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, age, address, emails, phones);
-    }
-
     @Builder
-    public Author(Long id, Instant createdAt, Instant updatedAt, String firstName, String lastName, int age,
-                  Address address, Set<@NotNull @Valid Email> emails, Set<@NotNull @Valid Phone> phones,
-                  Set<@NotNull @Valid Announcement> announcements) {
+    public Author(Long id, Instant createdAt, Instant updatedAt, String userName, String password, String firstName,
+                  String lastName, int age, Address address, Set<Role> roles, Set<@NotNull @Valid Email> emails,
+                  Set<@NotNull @Valid Phone> phones, Set<@NotNull @Valid Announcement> announcements) {
         super(id, createdAt, updatedAt);
+        this.userName = userName;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.address = address;
+        this.roles = roles;
         this.emails = emails;
         this.phones = phones;
         this.announcements = announcements;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, age, address, emails, phones);
     }
 
     @Override

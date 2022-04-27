@@ -9,6 +9,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import org.bulletin_board.domain.AbstractEntity;
+import org.bulletin_board.domain.SimpleValueConvertible;
+import org.bulletin_board.dto.SimpleValue;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +28,7 @@ import java.util.Objects;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder
-public class Email extends AbstractEntity {
+public class Email extends AbstractEntity implements SimpleValueConvertible {
 
     @Pattern(regexp = "(.+)@(.+)(\\..+)")
     @NotBlank(message = "Email cannot be empty")
@@ -41,6 +43,11 @@ public class Email extends AbstractEntity {
         super(id);
         this.name = name;
         this.author = author;
+    }
+
+    @Override
+    public SimpleValue toSimpleValue() {
+        return new SimpleValue(this.id, this.name);
     }
 
     @Override

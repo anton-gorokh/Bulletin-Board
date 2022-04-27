@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.bulletin_board.domain.AbstractEntity;
+import org.bulletin_board.domain.SimpleValueConvertible;
+import org.bulletin_board.dto.SimpleValue;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +23,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class Address extends AbstractEntity {
+public class Address extends AbstractEntity implements SimpleValueConvertible {
     @Enumerated(EnumType.STRING)
     private Country country;
 
@@ -41,6 +43,11 @@ public class Address extends AbstractEntity {
         this.city = city;
         this.street = street;
         this.postalCode = postalCode;
+    }
+
+    @Override
+    public SimpleValue toSimpleValue() {
+        return new SimpleValue(this.id, toString());
     }
 
     @Override
