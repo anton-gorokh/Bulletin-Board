@@ -20,7 +20,7 @@ public class MapperUtil {
     }
 
     public static List<Long> getSimpleValueIds(List<SimpleValue> values) {
-        values.stream().map(val -> val.getId()).collect(Collectors.toList());
+        return values.stream().map(SimpleValue::getId).collect(Collectors.toList());
     }
 
     public static <T> T getValueOrDefault(T value, T defaultValue) {
