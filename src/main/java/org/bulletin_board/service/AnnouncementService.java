@@ -1,9 +1,8 @@
 package org.bulletin_board.service;
 
-import org.bulletin_board.domain.board.Announcement;
+import org.bulletin_board.domain.model.Announcement;
 import org.bulletin_board.dto.AnnouncementDto;
 import org.bulletin_board.repository.AnnouncementRepository;
-import org.bulletin_board.service.author.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -13,12 +12,16 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class AnnouncementService implements CrudService<AnnouncementDto> {
+
+    private final AnnouncementFilterService announcementFilterService;
     private final AnnouncementRepository repository;
     private final AnnouncementMapper mapper;
 
     private final EmailService emailService;
 
-    public AnnouncementService(AnnouncementRepository repository, AnnouncementMapper mapper, EmailService emailService) {
+    @Autowired
+    public AnnouncementService(AnnouncementFilterService announcementFilterService, AnnouncementRepository repository, AnnouncementMapper mapper, EmailService emailService) {
+        this.announcementFilterService = announcementFilterService;
         this.repository = repository;
         this.mapper = mapper;
         this.emailService = emailService;
@@ -35,9 +38,9 @@ public class AnnouncementService implements CrudService<AnnouncementDto> {
             throw new IllegalArgumentException("Dto has id");
         }
 
-        Long savedId = repository.save(mapper.mapToEntity(dto)).getId();
-        emailService.sendEmails(repository.getById(savedId));
-        return savedId;
+        Announcement entity = repository.save(mapper.mapToEntity(dto));
+        announcementFilterService.findMatchingAndSendNotice(entity);
+        return entity.getId();
     }
 
     @Override

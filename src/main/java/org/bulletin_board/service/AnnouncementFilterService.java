@@ -1,6 +1,8 @@
 package org.bulletin_board.service;
 
-import org.bulletin_board.domain.board.AnnouncementFilter;
+import org.bulletin_board.domain.model.Announcement;
+import org.bulletin_board.domain.model.AnnouncementFilter;
+import org.bulletin_board.dto.AnnouncementDto;
 import org.bulletin_board.dto.AnnouncementFilterDto;
 import org.bulletin_board.repository.AnnouncementFilterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,4 +48,11 @@ public class AnnouncementFilterService implements CrudService<AnnouncementFilter
         repository.deleteById(id);
     }
 
+    public void deleteAllByAuthorId(Long authorId) {
+        repository.deleteAllByAuthorId(authorId);
+    }
+
+    public void findMatchingAndSendNotice(Announcement announcement) {
+        // TODO
+    }
 }

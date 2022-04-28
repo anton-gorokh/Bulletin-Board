@@ -1,10 +1,9 @@
 package org.bulletin_board.service;
 
-import org.bulletin_board.domain.board.Announcement;
+import org.bulletin_board.domain.model.Announcement;
 import org.bulletin_board.dto.AnnouncementDto;
 import org.bulletin_board.repository.AuthorRepository;
 import org.bulletin_board.repository.CategoryRepository;
-import org.bulletin_board.service.author.AuthorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

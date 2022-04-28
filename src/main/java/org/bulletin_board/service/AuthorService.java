@@ -1,10 +1,9 @@
-package org.bulletin_board.service.author;
+package org.bulletin_board.service;
 
-import org.bulletin_board.domain.board.author.Author;
+import org.bulletin_board.domain.model.author.Author;
 import org.bulletin_board.dto.SimplePair;
 import org.bulletin_board.dto.author.AuthorDto;
 import org.bulletin_board.repository.AuthorRepository;
-import org.bulletin_board.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,13 +18,15 @@ import java.util.stream.Collectors;
 public class AuthorService {
     private final PasswordEncoder passwordEncoder;
     private final AnnouncementService announcementService;
+    private final AnnouncementFilterService announcementFilterService;
     private final AuthorMapper mapper;
     private final AuthorRepository authorRepository;
 
     @Autowired
-    public AuthorService(PasswordEncoder passwordEncoder, AnnouncementService announcementService, AuthorMapper mapper, AuthorRepository authorRepository) {
+    public AuthorService(PasswordEncoder passwordEncoder, AnnouncementService announcementService, AnnouncementFilterService announcementFilterService, AuthorMapper mapper, AuthorRepository authorRepository) {
         this.passwordEncoder = passwordEncoder;
         this.announcementService = announcementService;
+        this.announcementFilterService = announcementFilterService;
         this.mapper = mapper;
         this.authorRepository = authorRepository;
     }
@@ -66,6 +67,7 @@ public class AuthorService {
 
     public void deleteById(Long id) {
         announcementService.deleteAllByAuthorId(id);
+        announcementFilterService.deleteAllByAuthorId(id);
         authorRepository.deleteById(id);
     }
 }

@@ -2,7 +2,7 @@ package org.bulletin_board.service.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.bulletin_board.domain.SimpleValueConvertible;
+import org.bulletin_board.domain.model.SimpleValueConvertible;
 import org.bulletin_board.dto.SimpleValue;
 
 import java.util.Collection;

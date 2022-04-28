@@ -1,9 +1,9 @@
-package org.bulletin_board.service.author;
+package org.bulletin_board.service;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.bulletin_board.domain.board.author.Author;
+import org.bulletin_board.domain.model.author.Author;
 import org.bulletin_board.repository.AuthorRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,7 +27,7 @@ public class AuthorDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Author author = repository.getByUserName(username);
+        Author author = repository.getByUsername(username);
         return buildUser(author);
     }
 
@@ -38,6 +38,6 @@ public class AuthorDetailsService implements UserDetailsService {
 
     private UserDetails buildUser(Author author) {
         Set<GrantedAuthority> authorities = getAuthorAuthorities(author);
-        return new User(author.getUserName(), author.getPassword(), authorities);
+        return new User(author.getUsername(), author.getPassword(), authorities);
     }
 }

@@ -1,10 +1,18 @@
-package org.bulletin_board.domain.board;
+package org.bulletin_board.domain.model;
 
-import lombok.*;
-import org.bulletin_board.domain.AbstractEntity;
-import org.bulletin_board.domain.board.author.Author;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.bulletin_board.domain.model.author.Author;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;

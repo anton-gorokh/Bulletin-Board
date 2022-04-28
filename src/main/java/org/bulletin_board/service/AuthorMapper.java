@@ -1,11 +1,10 @@
-package org.bulletin_board.service.author;
+package org.bulletin_board.service;
 
-import org.bulletin_board.domain.board.author.Author;
+import org.bulletin_board.domain.model.author.Author;
 import org.bulletin_board.dto.author.AuthorDto;
 import org.bulletin_board.repository.AddressRepository;
 import org.bulletin_board.repository.EmailRepository;
 import org.bulletin_board.repository.PhoneRepository;
-import org.bulletin_board.service.SimpleDtoMapper;
 import org.bulletin_board.service.util.MapperUtil;
 import org.springframework.stereotype.Service;
 

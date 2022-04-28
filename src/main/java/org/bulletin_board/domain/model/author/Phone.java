@@ -1,4 +1,4 @@
-package org.bulletin_board.domain.board.author;
+package org.bulletin_board.domain.model.author;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
-import org.bulletin_board.domain.AbstractEntity;
-import org.bulletin_board.domain.SimpleValueConvertible;
+import org.bulletin_board.domain.model.AbstractEntity;
+import org.bulletin_board.domain.model.SimpleValueConvertible;
 import org.bulletin_board.dto.SimpleValue;
 
 import javax.persistence.Column;
@@ -17,49 +17,48 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
-@Entity
 @Getter
 @Setter
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
-@Builder
-public class Email extends AbstractEntity implements SimpleValueConvertible {
+@Entity
+public class Phone extends AbstractEntity implements SimpleValueConvertible {
 
-    @Pattern(regexp = "(.+)@(.+)(\\..+)")
-    @NotBlank(message = "Email cannot be empty")
-    @Column(nullable = false)
-    String name;
+    @Size(max = 16)
+    @NotBlank(message = "Phone number cannot be empty")
+    @Column(name = "phone_number")
+    String phoneNumber;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     Author author;
 
     @Builder
-    public Email(Long id, String name, Author author) {
+    public Phone(Long id, String phoneNumber, Author author) {
         super(id);
-        this.name = name;
+        this.phoneNumber = phoneNumber;
         this.author = author;
     }
 
     @Override
     public SimpleValue toSimpleValue() {
-        return new SimpleValue(this.id, this.name);
+        return new SimpleValue(this.id, this.phoneNumber);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Email email = (Email) o;
-        return id == email.id && name.equals(email.name);
+        Phone phone = (Phone) o;
+        return id == phone.id && phoneNumber.equals(phone.phoneNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, phoneNumber);
     }
 }

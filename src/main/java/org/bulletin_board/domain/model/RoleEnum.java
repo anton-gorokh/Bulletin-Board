@@ -1,4 +1,4 @@
-package org.bulletin_board.domain;
+package org.bulletin_board.domain.model;
 
 public enum RoleEnum {
     ROLE_USER,

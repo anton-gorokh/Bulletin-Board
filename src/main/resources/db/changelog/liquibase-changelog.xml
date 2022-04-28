@@ -26,7 +26,7 @@
             <column name="id_" type="BIGINT" autoIncrement="false" defaultValueSequenceNext="author_id_seq_">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="user_name_" type="VARCHAR(255)">
+            <column name="username_" type="VARCHAR(255)">
                 <constraints nullable="false" unique="true" uniqueConstraintName="UC_238745vn203v"/>
             </column>
             <column name="password_" type="VARCHAR(255)">
@@ -223,6 +223,54 @@
         </sql>
         <dropColumn tableName="announcement_" columnName="text_"/>
         <renameColumn tableName="announcement_" oldColumnName="text_copy_" newColumnName="text_"/>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="29">
+        <createSequence sequenceName="MailNotice_id_seq_" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="30">
+        <createTable tableName="mail_notice_">
+            <column name="id_" type="BIGINT" autoIncrement="false" defaultValueSequenceNext="MailNotice_id_seq_">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="created_at_" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at_" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subject_" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipients_" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content_" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sent_at_" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="31">
+        <createSequence sequenceName="MailNoticeAttachment_id_seq_" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="32">
+        <createTable tableName="mail_notice_attachment_">
+            <column name="id_" type="BIGINT" autoIncrement="false" defaultValueSequenceNext="MailNoticeAttachment_id_seq_">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name_" type="VARCHAR">
+                <constraints nullable = "false"/>
+            </column>
+            <column name="content_" type="TEXT">
+                <constraints nullable = "false"/>
+            </column>
+            <column name="mail_notice_id_" type="BIGINT">
+                <constraints referencedTableName="mail_notice_"
+                             referencedColumnNames="id_"
+                             foreignKeyName="FK_MailNoticeAttachment_MailNotice_4235v87"
+                             nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
 
     <changeSet author="anton-gorokh" id="0">

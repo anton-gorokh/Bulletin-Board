@@ -31,7 +31,7 @@
         <insert tableName="author_">
             <column name="created_at_" valueComputed="NOW()"/>
             <column name="updated_at_" valueComputed="NOW()"/>
-            <column name="user_name_" value="anton-gorokh"/>
+            <column name="username_" value="anton-gorokh"/>
             <column name="password_" value="$2a$10$LzwW0kK4vBPmZXtyk/MsC.rwo76OMK9K29rDkScr3mPUiELptSqka"/>
             <column name="first_name_" value="Anton"/>
             <column name="last_name_" value="Gorokh"/>

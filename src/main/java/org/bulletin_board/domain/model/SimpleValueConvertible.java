@@ -1,4 +1,4 @@
-package org.bulletin_board.domain;
+package org.bulletin_board.domain.model;
 
 import org.bulletin_board.dto.SimpleValue;
 

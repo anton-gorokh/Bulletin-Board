@@ -1,13 +1,25 @@
-package org.bulletin_board.domain.board.author;
+package org.bulletin_board.domain.model.author;
 
-import lombok.*;
-import org.bulletin_board.domain.AuditModel;
-import org.bulletin_board.domain.Role;
-import org.bulletin_board.domain.board.Announcement;
-import org.bulletin_board.domain.board.Announcement_;
-import org.bulletin_board.domain.board.address.Address;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.bulletin_board.domain.model.Announcement;
+import org.bulletin_board.domain.model.Announcement_;
+import org.bulletin_board.domain.model.AuditModel;
+import org.bulletin_board.domain.model.Role;
+import org.bulletin_board.domain.model.address.Address;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -27,7 +39,7 @@ public class Author extends AuditModel {
 
     @NotBlank
     @Column(nullable = false, unique = true)
-    private String userName;
+    private String username;
 
     @Column(nullable = false)
     private String password;
@@ -84,11 +96,11 @@ public class Author extends AuditModel {
     }
 
     @Builder
-    public Author(Long id, Instant createdAt, Instant updatedAt, String userName, String password, String firstName,
+    public Author(Long id, Instant createdAt, Instant updatedAt, String username, String password, String firstName,
                   String lastName, int age, Address address, Set<Role> roles, Set<@NotNull @Valid Email> emails,
                   Set<@NotNull @Valid Phone> phones, Set<@NotNull @Valid Announcement> announcements) {
         super(id, createdAt, updatedAt);
-        this.userName = userName;
+        this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;

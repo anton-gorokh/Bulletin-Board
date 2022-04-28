@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.bulletin_board.TestWithLiquibase;
-import org.bulletin_board.domain.board.author.Author;
+import org.bulletin_board.domain.model.author.Author;
 import org.bulletin_board.dto.SimpleValue;
 import org.bulletin_board.dto.author.AuthorDto;
 import org.bulletin_board.repository.AuthorRepository;

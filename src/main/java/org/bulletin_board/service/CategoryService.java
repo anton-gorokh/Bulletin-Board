@@ -1,7 +1,7 @@
 package org.bulletin_board.service;
 
 
-import org.bulletin_board.domain.board.Category;
+import org.bulletin_board.domain.model.Category;
 import org.bulletin_board.dto.SimpleValue;
 import org.bulletin_board.repository.CategoryRepository;
 import org.bulletin_board.service.util.MapperUtil;
