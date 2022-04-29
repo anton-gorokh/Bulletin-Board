@@ -2,7 +2,7 @@ package org.bulletin_board.service;
 
 import org.bulletin_board.domain.model.Announcement;
 import org.bulletin_board.dto.AnnouncementDto;
-import org.bulletin_board.mail.NoticeMailSender;
+import org.bulletin_board.mail.MailNoticeSender;
 import org.bulletin_board.repository.AnnouncementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,14 +17,14 @@ public class AnnouncementService implements CrudService<AnnouncementDto> {
     private final AnnouncementFilterService announcementFilterService;
     private final AnnouncementRepository repository;
     private final AnnouncementMapper mapper;
-    private final NoticeMailSender noticeMailSender;
+    private final MailNoticeSender mailNoticeSender;
 
     @Autowired
-    public AnnouncementService(AnnouncementFilterService announcementFilterService, AnnouncementRepository repository, AnnouncementMapper mapper, NoticeMailSender noticeMailSender) {
+    public AnnouncementService(AnnouncementFilterService announcementFilterService, AnnouncementRepository repository, AnnouncementMapper mapper, MailNoticeSender mailNoticeSender) {
         this.announcementFilterService = announcementFilterService;
         this.repository = repository;
         this.mapper = mapper;
-        this.noticeMailSender = noticeMailSender;
+        this.mailNoticeSender = mailNoticeSender;
     }
 
     @Override
