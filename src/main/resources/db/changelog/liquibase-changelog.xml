@@ -47,48 +47,12 @@
             <column name="age_" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
+            <column name="phones_" type="VARCHAR(255)"/>
+            <column name="emails_" type="VARCHAR(255)"/>
             <column name="address_id_" type="BIGINT">
                 <constraints referencedTableName="address_"
                              referencedColumnNames="id_"
                              foreignKeyName="FK_AUTHOR_ADDRESS_235n283vn5"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="anton-gorokh" id="5">
-        <createSequence sequenceName="email_id_seq_" startValue="1" incrementBy="1"/>
-    </changeSet>
-    <changeSet author="anton-gorokh" id="6">
-        <createTable tableName="email_">
-            <column name="id_" type="BIGINT" autoIncrement="false" defaultValueSequenceNext="email_id_seq_">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="name_" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="author_id_" type="BIGINT">
-                <constraints referencedTableName="author_"
-                             referencedColumnNames="id_"
-                             foreignKeyName="FK_EMAIL_AUTHOR_q937845hn"
-                             nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="anton-gorokh" id="7">
-        <createSequence sequenceName="phone_id_seq_" startValue="1" incrementBy="1"/>
-    </changeSet>
-    <changeSet author="anton-gorokh" id="8">
-        <createTable tableName="phone_">
-            <column name="id_" type="BIGINT" autoIncrement="false" defaultValueSequenceNext="phone_id_seq_">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="phone_number_" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="author_id_" type="BIGINT">
-                <constraints referencedTableName="author_"
-                             referencedColumnNames="id_"
-                             foreignKeyName="FK_PHONE_AUTHOR_q937845hn"
-                             nullable="false"/>
             </column>
         </createTable>
     </changeSet>

@@ -1,4 +1,4 @@
-package org.bulletin_board.domain.model.address;
+package org.bulletin_board.domain.model;
 
 public enum Country {
     AF("Afghanistan"),

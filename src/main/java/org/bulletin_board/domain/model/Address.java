@@ -1,4 +1,4 @@
-package org.bulletin_board.domain.model.address;
+package org.bulletin_board.domain.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.bulletin_board.domain.model.AbstractEntity;
-import org.bulletin_board.domain.model.SimpleValueConvertible;
 import org.bulletin_board.dto.SimpleValue;
 
 import javax.persistence.Column;

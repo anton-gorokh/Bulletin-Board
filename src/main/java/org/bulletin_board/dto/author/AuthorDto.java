@@ -21,6 +21,6 @@ public class AuthorDto {
     private int age;
 
     private SimpleValue address;
-    private List<SimpleValue> phones;
-    private List<SimpleValue> emails;
+    private List<String> phones;
+    private List<String> emails;
 }

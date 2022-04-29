@@ -1,6 +1,6 @@
 package org.bulletin_board.service;
 
-import org.bulletin_board.domain.model.author.Author;
+import org.bulletin_board.domain.model.Author;
 import org.bulletin_board.dto.SimplePair;
 import org.bulletin_board.dto.author.AuthorDto;
 import org.bulletin_board.repository.AuthorRepository;

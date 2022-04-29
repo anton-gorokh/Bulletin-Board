@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.bulletin_board.domain.model.author.Author;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

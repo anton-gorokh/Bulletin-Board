@@ -3,7 +3,7 @@ package org.bulletin_board.service;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.bulletin_board.domain.model.author.Author;
+import org.bulletin_board.domain.model.Author;
 import org.bulletin_board.repository.AuthorRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

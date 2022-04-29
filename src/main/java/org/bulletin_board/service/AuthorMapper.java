@@ -1,11 +1,10 @@
 package org.bulletin_board.service;
 
-import org.bulletin_board.domain.model.author.Author;
+import org.bulletin_board.domain.model.Author;
 import org.bulletin_board.dto.author.AuthorDto;
 import org.bulletin_board.repository.AddressRepository;
-import org.bulletin_board.repository.EmailRepository;
-import org.bulletin_board.repository.PhoneRepository;
 import org.bulletin_board.service.util.MapperUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,13 +13,10 @@ import java.util.Set;
 @Service
 @Transactional
 public class AuthorMapper implements SimpleDtoMapper<Author, AuthorDto> {
-    private final PhoneRepository phoneRepository;
-    private final EmailRepository emailRepository;
     private final AddressRepository addressRepository;
 
-    public AuthorMapper(PhoneRepository phoneRepository, EmailRepository emailRepository, AddressRepository addressRepository) {
-        this.phoneRepository = phoneRepository;
-        this.emailRepository = emailRepository;
+    @Autowired
+    public AuthorMapper(AddressRepository addressRepository) {
         this.addressRepository = addressRepository;
     }
 
@@ -30,8 +26,8 @@ public class AuthorMapper implements SimpleDtoMapper<Author, AuthorDto> {
                 .lastName(author.getLastName())
                 .age(author.getAge())
                 .address(author.getAddress().toSimpleValue())
-                .phones(MapperUtil.toSimpleValues(author.getPhones()))
-                .emails(MapperUtil.toSimpleValues(author.getEmails()))
+                .phones(author.getPhones())
+                .emails(author.getEmails())
                 .build();
     }
 
@@ -41,8 +37,8 @@ public class AuthorMapper implements SimpleDtoMapper<Author, AuthorDto> {
                 .lastName(authorDto.getLastName())
                 .age(authorDto.getAge())
                 .address(addressRepository.getById(authorDto.getAddress().getId()))
-                .phones(Set.copyOf(phoneRepository.findAllById(MapperUtil.getSimpleValueIds(authorDto.getPhones()))))
-                .emails(Set.copyOf(emailRepository.findAllById(MapperUtil.getSimpleValueIds(authorDto.getEmails()))))
+                .phones(authorDto.getPhones())
+                .emails(authorDto.getEmails())
                 .build();
     }
 }

@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
-import org.bulletin_board.domain.model.author.Author;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

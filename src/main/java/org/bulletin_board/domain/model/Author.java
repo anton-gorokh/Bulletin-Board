@@ -1,4 +1,4 @@
-package org.bulletin_board.domain.model.author;
+package org.bulletin_board.domain.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -6,13 +6,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.bulletin_board.domain.model.Announcement;
-import org.bulletin_board.domain.model.Announcement_;
-import org.bulletin_board.domain.model.AuditModel;
-import org.bulletin_board.domain.model.Role;
-import org.bulletin_board.domain.model.address.Address;
+import org.bulletin_board.domain.util.StringListToStringConverter;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -26,6 +23,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -70,11 +68,11 @@ public class Author extends AuditModel {
     )
     private Set<Role> roles;
 
-    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = Email_.AUTHOR)
-    private Set<@NotNull @Valid Email> emails;
+    @Convert(converter = StringListToStringConverter.class)
+    private List<String> emails;
 
-    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = Phone_.AUTHOR)
-    private Set<@NotNull @Valid Phone> phones;
+    @Convert(converter = StringListToStringConverter.class)
+    private List<String> phones;
 
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = Announcement_.AUTHOR)
     private Set<@NotNull @Valid Announcement> announcements;
@@ -96,9 +94,9 @@ public class Author extends AuditModel {
     }
 
     @Builder
-    public Author(Long id, Instant createdAt, Instant updatedAt, String username, String password, String firstName,
-                  String lastName, int age, Address address, Set<Role> roles, Set<@NotNull @Valid Email> emails,
-                  Set<@NotNull @Valid Phone> phones, Set<@NotNull @Valid Announcement> announcements) {
+    public Author(Long id, Instant createdAt, Instant updatedAt, String username, String password,
+                  String firstName, String lastName, int age, Address address, Set<Role> roles,
+                  List<String> emails, List<String> phones, Set<@NotNull @Valid Announcement> announcements) {
         super(id, createdAt, updatedAt);
         this.username = username;
         this.password = password;

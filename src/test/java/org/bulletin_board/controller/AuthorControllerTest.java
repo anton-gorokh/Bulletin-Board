@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.bulletin_board.TestWithLiquibase;
-import org.bulletin_board.domain.model.author.Author;
+import org.bulletin_board.domain.model.Author;
 import org.bulletin_board.dto.SimpleValue;
 import org.bulletin_board.dto.author.AuthorDto;
 import org.bulletin_board.repository.AuthorRepository;
@@ -71,14 +71,8 @@ public class AuthorControllerTest extends TestWithLiquibase {
                 () -> Assertions.assertEquals(author.getLastName(), authorDto.getLastName()),
                 () -> Assertions.assertEquals(author.getAge(), authorDto.getAge()),
                 () -> Assertions.assertEquals(author.getAddress().toString(), authorDto.getAddress().getName()),
-                () -> Assertions.assertEquals(author.getPhones().stream()
-                                .map(x -> new SimpleValue(x.getId(), x.getPhoneNumber()))
-                                .collect(Collectors.toList()),
-                        authorDto.getPhones()),
-                () -> Assertions.assertEquals(author.getEmails().stream()
-                                .map(x -> new SimpleValue(x.getId(), x.getName()))
-                                .collect(Collectors.toList()),
-                        authorDto.getEmails())
+                () -> Assertions.assertEquals(author.getPhones(), authorDto.getPhones()),
+                () -> Assertions.assertEquals(author.getEmails(), authorDto.getEmails())
         );
     }
 }

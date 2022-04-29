@@ -42,30 +42,6 @@
             <delete tableName="author_"/>
         </rollback>
     </changeSet>
-    <changeSet author="anton-gorokh" id="17">
-        <preConditions>
-            <sqlCheck expectedResult="0">select count(1) from phone_ where phone_number_ = '+380661234567'</sqlCheck>
-        </preConditions>
-        <insert tableName="phone_">
-            <column name="phone_number_" value="+380661234567"/>
-            <column name="author_id_" valueComputed="(select id_ from author_ where last_name_ = 'Gorokh')"/>
-        </insert>
-        <rollback>
-            <delete tableName="phone_"/>
-        </rollback>
-    </changeSet>
-    <changeSet author="anton-gorokh" id="18">
-        <preConditions>
-            <sqlCheck expectedResult="0">select count(1) from email_ where name_ = 'test@mail.com'</sqlCheck>
-        </preConditions>
-        <insert tableName="email_">
-            <column name="name_" value="test@mail.com"/>
-            <column name="author_id_" valueComputed="(select id_ from author_ where last_name_ = 'Gorokh')"/>
-        </insert>
-        <rollback>
-            <delete tableName="email_"/>
-        </rollback>
-    </changeSet>
     <changeSet author="anton-gorokh" id="19">
         <preConditions>
             <sqlCheck expectedResult="0">select count(1) from category_ where name_ = 'IT'</sqlCheck>
