@@ -2,6 +2,8 @@ package org.bulletin_board.mail;
 
 import org.bulletin_board.domain.model.mail.MailNotice;
 import org.bulletin_board.domain.model.mail.MailNoticeAttachment;
+import org.bulletin_board.mail.notice.Notice;
+import org.bulletin_board.repository.MailNoticeAttachmentRepository;
 import org.bulletin_board.repository.MailNoticeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +17,7 @@ import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MailNoticeSender {
@@ -25,11 +28,22 @@ public class MailNoticeSender {
 
     private final JavaMailSender javaMailSender;
     private final MailNoticeRepository mailNoticeRepository;
+    private final MailNoticeAttachmentRepository mailNoticeAttachmentRepository;
 
     @Autowired
-    public MailNoticeSender(JavaMailSender javaMailSender, MailNoticeRepository mailNoticeRepository) {
+    public MailNoticeSender(JavaMailSender javaMailSender, MailNoticeRepository mailNoticeRepository, MailNoticeAttachmentRepository mailNoticeAttachmentRepository) {
         this.javaMailSender = javaMailSender;
         this.mailNoticeRepository = mailNoticeRepository;
+        this.mailNoticeAttachmentRepository = mailNoticeAttachmentRepository;
+    }
+
+    public void addNoticeToSendOrder(Notice notice) {
+        MailNotice mailNotice = notice.toMailNotice();
+        mailNoticeRepository.save(mailNotice);
+
+        Set<MailNoticeAttachment> attachments = mailNotice.getAttachments();
+        attachments.forEach(x -> x.setMailNotice(mailNotice));
+        mailNoticeAttachmentRepository.saveAll(attachments);
     }
 
     @Transactional
