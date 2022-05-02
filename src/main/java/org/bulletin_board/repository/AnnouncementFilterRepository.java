@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AnnouncementFilterRepository extends JpaRepository<AnnouncementFilter, Long> {
     void deleteAllByAuthorId(Long id);
+
+    AnnouncementFilter getByAuthorId(Long authorId);
 }

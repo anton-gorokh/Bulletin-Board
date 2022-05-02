@@ -41,6 +41,12 @@ public class AnnouncementService implements CrudService<AnnouncementDto> {
         return authors.stream().map(mapper::mapToDto).collect(Collectors.toList());
     }
 
+    public List<AnnouncementDto> getPageOfCategory(int page, int size, String categoryName) {
+        PageRequest request = PageRequest.of(page, size, Sort.by(Announcement_.UPDATED_AT).descending());
+        List<Announcement> authors = repository.findAllByCategoryName(request, categoryName).getContent();
+        return authors.stream().map(mapper::mapToDto).collect(Collectors.toList());
+    }
+
     @Override
     public AnnouncementDto getById(Long id) {
         return mapper.mapToDto(repository.getById(id));

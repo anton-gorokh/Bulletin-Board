@@ -28,6 +28,10 @@ public class AnnouncementFilterService implements CrudService<AnnouncementFilter
         return mapper.mapToDto(repository.getById(id));
     }
 
+    public AnnouncementFilterDto getByAuthorId(Long authorId) {
+        return mapper.mapToDto(repository.getByAuthorId(authorId));
+    }
+
     @Override
     public Long save(AnnouncementFilterDto dto) {
         if (dto.getId() != null) {

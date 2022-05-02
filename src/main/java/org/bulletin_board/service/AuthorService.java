@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class AuthorService {
+public class AuthorService implements CrudService<AuthorDto> {
     private final PasswordEncoder passwordEncoder;
     private final AnnouncementService announcementService;
     private final AnnouncementFilterService announcementFilterService;
@@ -39,11 +39,13 @@ public class AuthorService {
         return authors.stream().map(mapper::mapToDto).collect(Collectors.toList());
     }
 
+    @Override
     public AuthorDto getById(Long id) {
         return mapper.mapToDto(authorRepository.getById(id));
     }
 
-    public long save(AuthorDto dto) {
+    @Override
+    public Long save(AuthorDto dto) {
         if (dto.getId() != null) {
             throw new IllegalArgumentException("Dto has id");
         }
@@ -52,6 +54,8 @@ public class AuthorService {
         return authorRepository.save(entity).getId();
     }
 
+
+    @Override
     public void update(AuthorDto dto, Long id) {
         Author entity = mapper.mapToEntity(dto);
         entity.setId(id);
@@ -67,6 +71,7 @@ public class AuthorService {
         author.setPassword(passwordEncoder.encode(oldNewPassword.getSecond()));
     }
 
+    @Override
     public void deleteById(Long id) {
         announcementService.deleteAllByAuthorId(id);
         announcementFilterService.deleteAllByAuthorId(id);
