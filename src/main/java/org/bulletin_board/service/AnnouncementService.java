@@ -1,14 +1,22 @@
 package org.bulletin_board.service;
 
+import liquibase.pro.packaged.A;
 import org.bulletin_board.domain.model.Announcement;
+import org.bulletin_board.domain.model.Announcement_;
+import org.bulletin_board.domain.model.Author;
 import org.bulletin_board.dto.AnnouncementDto;
+import org.bulletin_board.dto.author.AuthorDto;
 import org.bulletin_board.mail.MailNoticeSender;
 import org.bulletin_board.repository.AnnouncementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -25,6 +33,12 @@ public class AnnouncementService implements CrudService<AnnouncementDto> {
         this.repository = repository;
         this.mapper = mapper;
         this.mailNoticeSender = mailNoticeSender;
+    }
+
+    public List<AnnouncementDto> getPage(int page, int size) {
+        PageRequest request = PageRequest.of(page, size, Sort.by(Announcement_.UPDATED_AT).descending());
+        List<Announcement> authors = repository.findAll(request).getContent();
+        return authors.stream().map(mapper::mapToDto).collect(Collectors.toList());
     }
 
     @Override

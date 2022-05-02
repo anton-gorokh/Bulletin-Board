@@ -1,11 +1,13 @@
 package org.bulletin_board.service;
 
 import org.bulletin_board.domain.model.Author;
+import org.bulletin_board.domain.model.Author_;
 import org.bulletin_board.dto.SimplePair;
 import org.bulletin_board.dto.author.AuthorDto;
 import org.bulletin_board.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +34,7 @@ public class AuthorService {
     }
 
     public List<AuthorDto> getPage(int page, int size) {
-        PageRequest request = PageRequest.of(page, size);
+        PageRequest request = PageRequest.of(page, size, Sort.by(Author_.FIRST_NAME).ascending().and(Sort.by(Author_.LAST_NAME).ascending()));
         List<Author> authors = authorRepository.findAll(request).getContent();
         return authors.stream().map(mapper::mapToDto).collect(Collectors.toList());
     }
