@@ -31,7 +31,7 @@ Right now I am studying basics of frontend development (html, css, javascript, t
 🗹 JUnit 5 tests
 🗹 JavaMail
 🗹 Liquibase
-🗹- PostgreSQL
+🗹 PostgreSQL
 🗹 Spring Boot
 
 ### Features
