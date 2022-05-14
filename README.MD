@@ -26,13 +26,13 @@ Right now I am studying basics of frontend development (html, css, javascript, t
 
 ### Technologies
 
-☐ AngularJS
-☐ File storage
-🗹 JUnit 5 tests
-🗹 JavaMail
-🗹 Liquibase
-🗹 PostgreSQL
-🗹 Spring Boot
+- ☐ AngularJS
+- ☐ File storage
+- 🗹 JUnit 5 tests
+- 🗹 JavaMail
+- 🗹 Liquibase
+- 🗹 PostgreSQL
+- 🗹 Spring Boot
 
 ### Features
 
