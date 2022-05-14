@@ -26,12 +26,12 @@
     </changeSet>
     <changeSet author="anton-gorokh" id="16">
         <preConditions>
-            <sqlCheck expectedResult="0">select count(1) from author_ where last_name_ = 'Gorokh'</sqlCheck>
+            <sqlCheck expectedResult="0">select count(1) from author_ where username_ = '89876767876'</sqlCheck>
         </preConditions>
         <insert tableName="author_">
             <column name="created_at_" valueComputed="NOW()"/>
             <column name="updated_at_" valueComputed="NOW()"/>
-            <column name="username_" value="anton-gorokh"/>
+            <column name="username_" value="89876767876"/>
             <column name="password_" value="$2a$10$LzwW0kK4vBPmZXtyk/MsC.rwo76OMK9K29rDkScr3mPUiELptSqka"/>
             <column name="first_name_" value="Anton"/>
             <column name="last_name_" value="Gorokh"/>
@@ -39,7 +39,9 @@
             <column name="address_id_" valueComputed="(select id_ from address_ where city_ = 'Odessa')"/>
         </insert>
         <rollback>
-            <delete tableName="author_"/>
+            <delete tableName="author_">
+                <where>username_ = 89876767876</where>
+            </delete>
         </rollback>
     </changeSet>
     <changeSet author="anton-gorokh" id="19">

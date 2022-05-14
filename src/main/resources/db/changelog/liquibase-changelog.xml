@@ -237,6 +237,18 @@
         </createTable>
     </changeSet>
 
+
+    <changeSet author="anton-gorokh" id="33">
+        <insert tableName="author_">
+            <column name="username_" value="admin"/>
+            <column name="password_" value="$2a$10$H342JuemmU2FJFF22cerXe2/J0nq4odlxIvjf6QL21UbhgDFNH9Hq"/>
+            <column name="first_name_" value="Admin"/>
+            <column name="last_name_" value="Admin"/>
+            <column name="age_" value="18"/>
+            <column name="created_at_" valueComputed="NOW()"/>
+            <column name="updated_at_" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
     <changeSet author="anton-gorokh" id="0">
         <tagDatabase tag="testsTag"/>
     </changeSet>

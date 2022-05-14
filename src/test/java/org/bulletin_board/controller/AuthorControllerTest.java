@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Example;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -58,7 +59,7 @@ public class AuthorControllerTest extends TestWithLiquibase {
     @Test
     public void shouldGetAuthor() throws Exception {
         System.out.println(passwordEncoder.encode("admin"));
-        Author author = authorRepository.getById(1L);
+        Author author = authorRepository.getById(2L);
 
         MvcResult result = mvc.perform(get("http://localhost:9999/author/" + author.getId()))
                 .andExpect(status().isOk())
