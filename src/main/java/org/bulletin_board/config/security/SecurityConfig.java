@@ -2,6 +2,7 @@ package org.bulletin_board.config.security;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import org.bulletin_board.domain.model.RoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -31,14 +32,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .mvcMatchers("/login*").permitAll()
-                .mvcMatchers("/security/action/user").hasRole("USER")
-                .mvcMatchers("/security/action/admin").hasRole("ADMIN")
+                .mvcMatchers("/login").permitAll()
+                .mvcMatchers("/admin/*").hasRole("ADMIN")
+                .mvcMatchers("/*").hasAnyRole("USER", "ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/user/hello")
                 .and()
                 .logout();
     }

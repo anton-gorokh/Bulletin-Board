@@ -237,16 +237,42 @@
         </createTable>
     </changeSet>
 
-
+    <changeSet author="anton-gorokh" id="34">
+        <insert tableName="role_">
+            <column name="name_">ROLE_USER</column>
+        </insert>
+        <insert tableName="role_">
+            <column name="name_">ROLE_ADMIN</column>
+        </insert>
+    </changeSet>
     <changeSet author="anton-gorokh" id="33">
         <insert tableName="author_">
-            <column name="username_" value="admin"/>
+            <column name="username_" value="test-admin"/>
             <column name="password_" value="$2a$10$H342JuemmU2FJFF22cerXe2/J0nq4odlxIvjf6QL21UbhgDFNH9Hq"/>
-            <column name="first_name_" value="Admin"/>
+            <column name="first_name_" value="Test"/>
             <column name="last_name_" value="Admin"/>
             <column name="age_" value="18"/>
             <column name="created_at_" valueComputed="NOW()"/>
             <column name="updated_at_" valueComputed="NOW()"/>
+        </insert>
+        <insert tableName="author_">
+            <column name="username_" value="test-user"/>
+            <column name="password_" value="$2a$10$XkoJbTO12KLzphOKWm4fZuQ3z.LpVn6yV4Ju7xGLcGxIteYhavkHq"/>
+            <column name="first_name_" value="Test"/>
+            <column name="last_name_" value="User"/>
+            <column name="age_" value="18"/>
+            <column name="created_at_" valueComputed="NOW()"/>
+            <column name="updated_at_" valueComputed="NOW()"/>
+        </insert>
+    </changeSet>
+    <changeSet author="anton-gorokh" id="35">
+        <insert tableName="author_role_">
+            <column name="author_id_" valueComputed="select id_ from author_ where username_ = 'test-admin'"/>
+            <column name="role_id_" valueComputed="select id_ from role_ where name_ = 'ROLE_ADMIN'"/>
+        </insert>
+        <insert tableName="author_role_">
+            <column name="author_id_" valueComputed="select id_ from author_ where username_ = 'test-user'"/>
+            <column name="role_id_" valueComputed="select id_ from role_ where name_ = 'ROLE_USER'"/>
         </insert>
     </changeSet>
     <changeSet author="anton-gorokh" id="0">
