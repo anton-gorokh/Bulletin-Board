@@ -44,6 +44,8 @@ Below you can find out what **is already in use** and what I am going to add **s
 - Frontend
 
 
+- [ ] main page
+- [ ] profile page
 - [ ] create / update / delete announcements
 - [ ] create / update / delete categories
 - [ ] create / update / delete users
