@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -33,8 +34,8 @@ public class AnnouncementController {
         return service.getPage(page, size);
     }
 
-    @GetMapping(path = "/pagination/byCategory/{category}/{page}/{size}")
-    public List<AnnouncementDto> getPageOfCategory(@PathVariable int page, @PathVariable int size, @PathVariable("category") String categoryName) {
+    @GetMapping(path = "/pagination/{page}/{size}")
+    public List<AnnouncementDto> getPageOfCategory(@PathVariable int page, @PathVariable int size, @RequestParam("category") String categoryName) {
         return service.getPageOfCategory(page, size, categoryName);
     }
 
