@@ -26,38 +26,38 @@ Right now I am studying basics of frontend development (html, css, javascript, t
 
 ### Technologies
 
-- ☐ AngularJS
-- ☐ File storage
-- 🗹 JUnit 5 tests
-- 🗹 JavaMail
-- 🗹 Liquibase
-- 🗹 PostgreSQL
-- 🗹 Spring Boot
+- - AngularJS
+- - File storage
+- + JUnit 5 tests
+- + JavaMail
+- + Liquibase
+- + PostgreSQL
+- + Spring Boot
 
 ### Features
 
 - Backend
 
-    - ☐ split announcements into groups
-    - ☐ last viewed announcements
-    - 🗹 create / update / delete announcements
-    - 🗹 create / update / delete categories
-    - 🗹 create / update / delete users
-    - 🗹 announcements pagination
-    - 🗹 users pagination
-    - 🗹 filter announcements
-    - 🗹 send notification about new announcement
+    - - split announcements into groups
+    - - last viewed announcements
+    - + create / update / delete announcements
+    - + create / update / delete categories
+    - + create / update / delete users
+    - + announcements pagination
+    - + users pagination
+    - + filter announcements
+    - + send notification about new announcement
 
 
 - Frontend
 
-    - ☐ main page
-    - ☐ profile page
-    - ☐ create / update / delete announcements
-    - ☐ create / update / delete categories
-    - ☐ create / update / delete users
-    - ☐ announcements pagination
-    - ☐ users pagination
-    - ☐ announcement groups
-    - ☐ last viewed announcements
-    - ☐ filter announcements
+    - - main page
+    - - profile page
+    - - create / update / delete announcements
+    - - create / update / delete categories
+    - - create / update / delete users
+    - - announcements pagination
+    - - users pagination
+    - - announcement groups
+    - - last viewed announcements
+    - - filter announcements
